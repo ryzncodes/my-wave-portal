@@ -23,5 +23,3 @@ const main = async () => {
   };
   
   runMain();
-
-  fasfas ishow.env
