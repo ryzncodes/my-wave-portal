@@ -1,12 +1,12 @@
 require("@nomiclabs/hardhat-waffle");
-require("dotenv").config();
+require("dotenv").config(); //enabling .env files,to hide url/api key
 
 
 module.exports = {
   solidity: "0.8.0",
   networks: {
     rinkeby: {
-      url: "https://eth-rinkeby.alchemyapi.io/v2/_tlTUYDuETL7wug6d6iWGsoS2iaCw5xH",
+      url: process.env.URL,
       accounts: [process.env.ACCOUNTS]
     },
   },

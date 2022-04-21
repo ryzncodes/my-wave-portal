@@ -8,15 +8,33 @@ import "hardhat/console.sol"; //to enable console.log in contract files.
 //Compile, Deploy to blockchain, console.log will run
 contract WavePortal {
     uint256 totalWaves; //uint256 variable to track how many waves have been done.
+    
+    event NewWave(address indexed from, uint256 timestamp, string message); //something that happen in blockchain, to show on app/ front-end using emit
+
+    struct Wave {
+        address waver;
+        string message;
+        uint256 timestamp;
+    }
+
+    Wave[] waves; // declaring waves variable to store array of wavers.
 
     //constructor function to put inside contract function, final code deployed to the blockchain. used to initialize state variables (permanent variables). something like owner/wtv that wont change
     constructor() { 
         console.log("Yo yo, I am a contract and I am smart");
     }
 
-    function wave() public { //to wave
+    function wave(string memory _message) public { //to wave, adding _message variable for users to send msg and waving
         totalWaves += 1; //added to the counter when this function is ran
-        console.log("%s has waved!", msg.sender); //%s, js shortcut. meant to msg.sender. useful when dealing w multiple variables
+        console.log("%s has waved and said: %s", msg.sender, _message); //%s, js shortcut. meant to msg.sender. useful when dealing w multiple variables
+        
+        waves.push(Wave(msg.sender, _message, block.timestamp)); //insert new wave info to the array
+
+        emit NewWave(msg.sender, block.timestamp, _message); //emitted the event in function.
+    }
+
+    function getAllWaves() public view returns (Wave[] memory) {
+        return waves;
     }
 
     function getTotalWaves() public view returns (uint256) { //view function will ensure state var will not be modified // returns meaning any output from the function, can return mutiple values.
