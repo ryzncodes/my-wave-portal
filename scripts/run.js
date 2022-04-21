@@ -2,25 +2,46 @@
 
 const main = async () => {                                                            //async enables us to use await.
     const waveContractFactory = await hre.ethers.getContractFactory("WavePortal"); //hre.ethers.getContractFactory("solidityfile.sol") compile contract
-    const waveContract = await waveContractFactory.deploy(); //deploying the contract into blockchain (locally in hardhat). //bridge to use fx from contract.
-    await waveContract.deployed(); //to wait until it's deployed first.
+    const waveContract = await waveContractFactory.deploy({ //deploying the contract into blockchain (locally in hardhat). //bridge to use fx from contract.
+      value: hre.ethers.utils.parseEther("0.1"), // giving ethers to the contract itself
+    }); 
 
+    await waveContract.deployed(); //to wait until it's deployed first.
     console.log("Contract deployed to:", waveContract.address); // this code will run after contract is deployed. waveContract.addreess will show the contract's address in the blockchain.
  
+    let contractBalance = await hre.ethers.provider.getBalance( //.ethers.provider.getBalance(address) to get contract's balance
+      waveContract.address
+    );
 
-    let waveCount; //variable for the fx in contract
-    waveCount = await waveContract.getTotalWaves(); //calling the getTotalWaves fx from our contract. waveContract used as bridge from .js to .sol
-    console.log(waveCount.toNumber());
+    console.log(
+      "Contract Balance:", 
+      hre.ethers.utils.formatEther(contractBalance) //formatEther will format the ether to generic format.
+    );
 
-    let waveTxn = await waveContract.wave("Hello Faiz!"); //calling wave fx. with strings
+    const waveTxn = await waveContract.wave("Hello Faiz!"); //calling wave fx. with strings
     await waveTxn.wait(); //.wait method used to allow waveTxn to happen first before going to next line of code.
+    const seedNum = waveContract.seed;
+    console.log(
+      "Your seed is: %s", seedNum
+    );
 
-    const [_, randomPerson] = await hre.ethers.getSigners();
-    waveTxn = await waveContract.connect(randomPerson).wave("Why are you talking to yourself?");
-    await waveTxn.wait();
+    contractBalance = await hre.ethers.provider.getBalance(waveContract.address);
+    console.log(
+      "Contract Balance:",
+      hre.ethers.utils.formatEther(contractBalance)
+    );
+
+    const waveTxn2 = await waveContract.wave("Hi let me win");
+    await waveTxn2.wait();
+
+    contractBalance = await hre.ethers.provider.getBalance(waveContract.address);
+    console.log(
+      "Contract Balance:",
+      hre.ethers.utils.formatEther(contractBalance)
+    );
 
     let allWaves = await waveContract.getAllWaves();
-    console.log(allWaves);
+    //console.log(allWaves);
   };
   
   const runMain = async () => {
