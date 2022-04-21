@@ -5,8 +5,22 @@ pragma solidity ^0.8.0; //What solidity version I'm using for this project. ^ me
 
 import "hardhat/console.sol"; //to enable console.log in contract files.
 
-contract WavePortal {                                           //Compile, Deploy to blockchain, console.log will run
-    constructor() {
+//Compile, Deploy to blockchain, console.log will run
+contract WavePortal {
+    uint256 totalWaves; //uint256 variable to track how many waves have been done.
+
+    //constructor function to put inside contract function, final code deployed to the blockchain. used to initialize state variables (permanent variables). something like owner/wtv that wont change
+    constructor() { 
         console.log("Yo yo, I am a contract and I am smart");
+    }
+
+    function wave() public { //to wave
+        totalWaves += 1; //added to the counter when this function is ran
+        console.log("%s has waved!", msg.sender); //%s, js shortcut. meant to msg.sender. useful when dealing w multiple variables
+    }
+
+    function getTotalWaves() public view returns (uint256) { //view function will ensure state var will not be modified // returns meaning any output from the function, can return mutiple values.
+        console.log("We have %d total waves!", totalWaves);
+        return totalWaves;
     }
 }
