@@ -8,7 +8,15 @@ const main = async () => {                                                      
 
     await waveContract.deployed(); //to wait until it's deployed first.
     console.log("Contract deployed to:", waveContract.address); // this code will run after contract is deployed. waveContract.addreess will show the contract's address in the blockchain.
- 
+    try{
+      var seedNumber = waveContract.getSeedValue(waveContract.setSeedValue);
+      console.log(seedNumber);
+    }
+    catch(error){
+      console.log("THIS SHIT DOESNT WORK");
+    }
+
+
     let contractBalance = await hre.ethers.provider.getBalance( //.ethers.provider.getBalance(address) to get contract's balance
       waveContract.address
     );
@@ -20,19 +28,7 @@ const main = async () => {                                                      
 
     const waveTxn = await waveContract.wave("Hello Faiz!"); //calling wave fx. with strings
     await waveTxn.wait(); //.wait method used to allow waveTxn to happen first before going to next line of code.
-    const seedNum = waveContract.seed;
-    console.log(
-      "Your seed is: %s", seedNum
-    );
-
-    contractBalance = await hre.ethers.provider.getBalance(waveContract.address);
-    console.log(
-      "Contract Balance:",
-      hre.ethers.utils.formatEther(contractBalance)
-    );
-
-    const waveTxn2 = await waveContract.wave("Hi let me win");
-    await waveTxn2.wait();
+    console.log(seedNumber);
 
     contractBalance = await hre.ethers.provider.getBalance(waveContract.address);
     console.log(

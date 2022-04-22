@@ -8,7 +8,15 @@ import "hardhat/console.sol"; //to enable console.log in contract files.
 //Compile, Deploy to blockchain, console.log will run
 contract WavePortal {
     uint256 totalWaves; //uint256 variable to track how many waves have been done.
-    uint256 private seed;
+    uint256 seed; //empty seed. can be change when wave fx is called.
+    
+    function getSeedValue() public view returns (uint256) {
+        return seed;
+    }
+
+    function setSeedValue(uint256 _seed) public {
+        seed = _seed; 
+        }
     
     event NewWave(address indexed from, uint256 timestamp, string message); //something that happen in blockchain, to show on app/ front-end using emit
 
