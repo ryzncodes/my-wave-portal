@@ -51,7 +51,7 @@ contract WavePortal {
         waves.push(Wave(msg.sender, _message, block.timestamp)); //insert new wave info to the array
 
         seed = (block.difficulty + block.timestamp + seed) % 100;
-
+        
         if (seed <= 50) {
             console.log("%s won!", msg.sender);
             uint256 prizeAmount = 0.0001 ether;

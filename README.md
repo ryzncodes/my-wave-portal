@@ -1,16 +1,9 @@
-# Basic Sample Hardhat Project
+#Wave DApp
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+Deployed on rinkeby test server
+DApp that lets user waves to the owner and having a chance to receive testeth. Consists of logs of whoever has been waving, timestamp and message.
 
-Try running some of the following tasks:
-
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
-"# my-wave-portal" 
+// included run.js to test multiple situations when user is using the dapp
+// generated seed from a random number(not truly random) to choose that associates with waver. If seed of the waver passes the condition placed in the contract, waver will receive ether.
+//.env file used to hide address & private key of owner.
+//.ethers are used to connect .js to .sol

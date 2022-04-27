@@ -9,7 +9,8 @@ const main = async () => {                                                      
     await waveContract.deployed(); //to wait until it's deployed first.
     console.log("Contract deployed to:", waveContract.address); // this code will run after contract is deployed. waveContract.addreess will show the contract's address in the blockchain.
     try{
-      var seedNumber = waveContract.getSeedValue(waveContract.setSeedValue);
+      const getSeedNumber = waveContract.getSeedValue;
+      var seedNumber = await waveContract.setSeedValue(getSeedNumber);
       console.log(seedNumber);
     }
     catch(error){
